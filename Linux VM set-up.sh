@@ -10,17 +10,19 @@
 if [ $(id -u) -eq 0 ]; then
 	sudo apt-get update && time sudo apt-get dist-upgrade
 	wait
-	sleep(1)
+	sleep 1
 	Userpassword=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;)
-	echo $Userpassword | passwd --stdin
-	echo "This user's (root) password is now : $Userpassword" 
+	#echo $Userpassword | passwd --stdin
+	#echo "This user's (root) password is now : $Userpassword" 
+	sudo passwd -e heather
+	echo "This user's (heather) password has been expired." 
 	wait
-	sleep(1)
+	sleep 1
 	SQLPWD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;)
 	mysqladmin -u root -p password $SQLPWD 
 	echo "The new root MySQL password is : $SQLPWD"
 	wait
-	sleep(1)
+	sleep 1
 	echo "--------------------------------------------------------"
 	echo "-THIS IS THE ONLY TIME YOU WILL SEE THE PASSWORDS ABOVE-"
 	echo "-                                                      -"
